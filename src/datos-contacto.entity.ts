@@ -8,6 +8,6 @@ export class DatosContacto {
   @Column()
   correo: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'bigint' })
   telefono: number;
 }

@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { Clientes } from 'src/clientes.entity';
 import { DatosContacto } from 'src/datos-contacto.entity';
 import { Claves } from 'src/claves.entity';
+import { Logs } from 'src/logs.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Controller('usuarios')
@@ -14,6 +15,8 @@ export class ClientesController {
     private datosContactoRepository: Repository<DatosContacto>,
     @InjectRepository(Claves)
     private clavesRepository: Repository<Claves>,
+    @InjectRepository(Logs)
+    private readonly logsRepository: Repository<Logs>,
   ) {}
 
   @Get()
@@ -41,6 +44,12 @@ export class ClientesController {
     await this.datosContactoRepository.save(datosContacto);
     await this.clavesRepository.save(claves);
     const createdCliente = await this.clientesRepository.save(cliente);
+
+    // Crear nuevo log
+    const logEntry = new Logs();
+    logEntry.fecha = new Date();
+    logEntry.mensaje = `Nuevo usuario: ${cliente.nombre}`;
+    await this.logsRepository.save(logEntry);
 
     return {
       cliente: createdCliente,

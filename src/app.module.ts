@@ -6,6 +6,7 @@ import { ClientesController } from './clientes/clientes.controller';
 import { Clientes } from 'src/clientes.entity';
 import { DatosContacto } from 'src/datos-contacto.entity';
 import { Claves } from 'src/claves.entity';
+import * as cors from 'cors';
 
 @Module({
   imports: [
@@ -24,4 +25,8 @@ import { Claves } from 'src/claves.entity';
   ],
   controllers: [ClientesController],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer) {
+    consumer.apply(cors()).forRoutes('*');
+  }
+}

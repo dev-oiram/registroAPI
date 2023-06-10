@@ -16,7 +16,7 @@ import * as cors from 'cors';
       // Base de Datos
       type: 'postgres',
       host: process.env.DB_HOST,
-      port: +process.env.DB_PORT, // Convert to number
+      port: 5432, // Convert to number
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
